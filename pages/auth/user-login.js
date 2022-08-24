@@ -32,12 +32,13 @@ export default function Login() {
         let decoded = jwtDecode(token);
         console.log(decoded);
 
-        if(decoded !== "admin") {
-          Cookies.set('token_user', token, {expires : 1})
-          Cookies.set('user', JSON.stringify(user), {expires : 1})
+        if (decoded !== "admin") {
+          Cookies.set("token_user", token, { expires: 1 });
+          Cookies.set("user", JSON.stringify(user), { expires: 1 });
           window.location = "/";
+        } else {
+          alert("Akun kamu bukan user");
         }
-
       })
       .catch((err) => {
         alert(err);

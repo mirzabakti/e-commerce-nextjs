@@ -1,7 +1,26 @@
 import { Navbar } from "flowbite-react";
+import Cookies from "js-cookie";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+// import { useRouter } from "next/router";
 
 const Navigation = () => {
+  // let router = useRouter();
+  const [user, setUser] = useState(undefined);
+
+  useEffect(() => {
+    if (Cookies.get("token_user") !== undefined) {
+      setUser(JSON.parse(Cookies.get("user")));
+    }
+  }, []);
+
+  const handleLogout = () => {
+    Cookies.remove("token_user");
+    Cookies.remove("user");
+    window.location = "/auth/user-login";
+    // router.push("/auth/user-login");
+  };
+
   return (
     <Navbar fluid={true} rounded={true}>
       <div className="container flex flex-wrap justify-between items-center mx-auto p-5">
@@ -51,13 +70,25 @@ const Navigation = () => {
                 </a>
               </Link>
             </li>
-            <li>
-              <Link href="auth/user-login">
-                <a className="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">
-                  Login
-                </a>
-              </Link>
-            </li>
+            {!user && (
+              <li>
+                <Link href="auth/user-login">
+                  <a className="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">
+                    Login
+                  </a>
+                </Link>
+              </li>
+            )}
+            {user && (
+              <li>
+                <span
+                  onClick={handleLogout}
+                  className="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                >
+                  Logout
+                </span>
+              </li>
+            )}
           </ul>
         </Navbar.Collapse>
       </div>
