@@ -1,6 +1,33 @@
 import Link from "next/link";
 
-const Card = () => {
+const Card = ({ data }) => {
+  console.log(data);
+
+  function formatRupiah(angka, prefix) {
+    var number_string = angka.replace(/[^,\d]/g, "").toString(),
+      split = number_string.split(","),
+      sisa = split[0].length % 3,
+      rupiah = split[0].substr(0, sisa),
+      ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+    // tambahkan titik jika yang di input sudah menjadi angka ribuan
+    if (ribuan) {
+      let separator = sisa ? "." : "";
+      rupiah += separator + ribuan.join(".");
+    }
+
+    rupiah = split[1] != undefined ? rupiah + "," + split[1] : rupiah;
+    return prefix == undefined ? rupiah : rupiah ? "Rp. " + rupiah : "";
+  }
+
+  const handleText = (param) => {
+    if (param === null) {
+      return "";
+    } else {
+      return param.slice(0, 25) + "...";
+    }
+  };
+
   return (
     <div className="relative border border-gray-100 " style={{ width: "300px" }}>
       <div className="relative object-cover w-full ">
@@ -9,12 +36,12 @@ const Card = () => {
       {/* <img className="object-cover w-full h-56 lg:h-72" src={data.image_url} alt="Build Your Own Drone" loading="lazy" /> */}
       <div className="p-6">
         <small>
-          <span className="bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded-r-lg dark:bg-green-200 dark:text-green-900">Kategori Produk</span>
+          <span className="bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded-r-lg dark:bg-green-200 dark:text-green-900">{data.category.category_name}</span>
         </small>
-        <h5 className="mt-4 ">Nama Produk</h5>
+        <h5 className="mt-4 ">{handleText(data.product_name)}</h5>
         <ul className="mt-5 text-sm font-thin text-gray-500 ">
-          <li>Stock : stok produk</li>
-          <li className="text-lg font-bold">Harga : Rp Produk Harga</li>
+          <li>Stock : {data.stock}</li>
+          <li className="text-lg font-bold">Harga : Rp {formatRupiah(data.price)}</li>
         </ul>
 
         <div className="flex items-center justify-between mt-4 border">
