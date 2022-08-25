@@ -33,7 +33,7 @@ export default function Home({ Product }) {
   };
 
   return (
-    <Layout>
+    <Layout home>
       <hr />
       <div className="my-20">
         <h1 className="text-2xl font-bold">Semua Produk</h1>
@@ -42,7 +42,7 @@ export default function Home({ Product }) {
         {dataProduct.length !== 0 &&
           dataProduct
             .filter((res, i) => {
-              return i < limit;
+              return res.available === 1 && i < limit;
             })
             .map((res) => {
               return <Card key={res.id} data={res} />;

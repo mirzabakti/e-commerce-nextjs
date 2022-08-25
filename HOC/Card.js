@@ -40,7 +40,6 @@ const Card = ({ data }) => {
         quality={80}
         />
       </div>
-      {/* <img className="object-cover w-full h-56 lg:h-72" src={data.image_url} alt="Build Your Own Drone" loading="lazy" /> */}
       <div className="p-6">
         <small>
           <span className="bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded-r-lg dark:bg-green-200 dark:text-green-900">{data.category.category_name}</span>
@@ -60,7 +59,7 @@ const Card = ({ data }) => {
           Add to Cart
         </button>
 
-        <Link href={``}>
+        <Link href={`/detail-product/${data.id}`}>
           <a className="block w-full p-4 mt-2 text-sm font-medium text-center text-blue-500 bg-white border border-blue-500 rounded-sm" type="button">
             Detail Product
           </a>

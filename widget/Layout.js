@@ -2,14 +2,12 @@ import Banner from "../components/Banner";
 import Footer from "../components/Footer";
 import Navigation from "../components/Navigation";
 
-const Layout = ({ children }) => {
+const Layout = ({ home, children }) => {
   return (
     <>
       <Navigation />
-      <Banner/>
-      <div className="container mx-auto p-5">
-        {children}
-      </div>
+      {home && <Banner />}
+      <div className="container mx-auto p-5">{children}</div>
       <Footer />
     </>
   );

@@ -24,7 +24,7 @@ const Navigation = () => {
   return (
     <Navbar fluid={true} rounded={true}>
       <div className="container flex flex-wrap justify-between items-center mx-auto p-5">
-        <Navbar.Brand href="https://flowbite.com/">
+        <Navbar.Brand href="/">
           <span className="self-center whitespace-nowrap text-xl font-semibold text-black">website.id</span>
         </Navbar.Brand>
         <div className="flex md:hidden lg:hidden ">
