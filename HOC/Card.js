@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 const Card = ({ data }) => {
   console.log(data);
@@ -30,8 +31,14 @@ const Card = ({ data }) => {
 
   return (
     <div className="relative border border-gray-100 " style={{ width: "300px" }}>
-      <div className="relative object-cover w-full ">
-        <img src={`https://fitinline.com/data/article/20210909/Foto-Produk-Baju-001.jpg`} alt="Flowbite Logo" />
+      <div className="relative object-cover w-full h-56">
+        <Image
+        src={`/api/imageproxy?url=${encodeURIComponent(data.image_url)}`}
+        alt="image"
+        layout="fill"
+        objectFit="cover"
+        quality={80}
+        />
       </div>
       {/* <img className="object-cover w-full h-56 lg:h-72" src={data.image_url} alt="Build Your Own Drone" loading="lazy" /> */}
       <div className="p-6">
