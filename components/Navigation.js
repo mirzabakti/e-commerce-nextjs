@@ -2,17 +2,19 @@ import axios from "axios";
 import { Navbar } from "flowbite-react";
 import Cookies from "js-cookie";
 import Link from "next/link";
-import { Router } from "next/router";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import { useContext, useEffect, useState } from "react";
+// import { useRouter } from "next/router";
+import { GlobalContext } from "../context/GlobalContext";
 
 const Navigation = () => {
-  let router = useRouter();
-  const [user, setUser] = useState(undefined);
+  // let router = useRouter();
+  let { state } = useContext(GlobalContext);
+  let { user, setUser } = state;
 
-  const [displaySearch, setDisplaySearch] = useState(false);
   const [search, setSearch] = useState("");
   const [data, setData] = useState(null);
+
+  const [displaySearch, setDisplaySearch] = useState(false);
 
   useEffect(() => {
     if (Cookies.get("token_user") !== undefined) {

@@ -50,7 +50,7 @@ const DetailData = () => {
             <div className="relative h-96 w-96 object-cover">
               <Image src={`/api/imageproxy?url=${encodeURIComponent(dataProduct.image_url)}`} alt="image" layout="fill" objectFit="cover" quality={80} />
             </div>
-            <div className="flex flex-col w-2/3 p-4">
+            <div className="flex w-2/3 flex-col p-4">
               <h1 className="text-2xl font-bold text-gray-900">{dataProduct.product_name}</h1>
               <p className="mt-2 grow text-sm text-gray-600">{dataProduct.description}</p>
               <div className="item-center mt-2 flex">
@@ -73,8 +73,13 @@ const DetailData = () => {
                   <path d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z"></path>
                 </svg>
               </div>
-              <div className="flex-wrap item-center mt-3 flex justify-between">
+              <div className="item-center mt-3 flex flex-wrap justify-between">
                 <h1 className="text-xl font-bold text-gray-700">{formatRupiah(dataProduct.price)}</h1>
+                <div className="mt-4 flex items-center justify-between border">
+                  <button className="h-full bg-gray-200 px-2 text-black">-</button>
+                  <input className="inline-block h-full w-full text-center focus:outline-none" placeholder="1" />
+                  <button className="h-full bg-gray-200 px-2 text-black">+</button>
+                </div>
                 <button className="rounded bg-gray-800 px-3 py-2 text-xs font-bold uppercase text-white">Add to Card</button>
               </div>
             </div>

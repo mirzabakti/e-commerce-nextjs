@@ -50,7 +50,7 @@ export default function Home({ Product }) {
         <div className="my-20">
           <h1 className="text-2xl font-bold">Produk Rekomendasi</h1>
         </div>
-        <div className="flex flex-wrap items-start justify-center gap-10 lg:justify-start">
+        <div className="flex flex-wrap items-start justify-center gap-10 lg:justify-start mb-10">
           {dataProduct.length !== 0 &&
             dataProduct
               .filter((res, i) => {
