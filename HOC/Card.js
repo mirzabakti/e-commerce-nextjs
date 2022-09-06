@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../context/GlobalContext";
 import Cookies from "js-cookie";
 
@@ -8,6 +8,8 @@ const Card = ({ data }) => {
   // console.log(data);
   let { state } = useContext(GlobalContext);
   let { user, setUser } = state;
+
+  const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
     if (Cookies.get("token_user") !== undefined) {
@@ -40,6 +42,9 @@ const Card = ({ data }) => {
     }
   };
 
+  const handleQuantityPlus = () => setQuantity(quantity + 1);
+  const handleQuantityMin = () => quantity > 0 && setQuantity(quantity - 1);
+
   return (
     <div className="relative border border-gray-100 " style={{ width: "300px" }}>
       <div className="relative h-56 w-full object-cover">
@@ -58,9 +63,13 @@ const Card = ({ data }) => {
         {user && (
           <>
             <div className="mt-4 flex items-center justify-between border">
-              <button className="h-full bg-gray-200 px-2 text-black">-</button>
-              <input className="inline-block h-full w-full text-center focus:outline-none" placeholder="1" />
-              <button className="h-full bg-gray-200 px-2 text-black">+</button>
+              <button onClick={handleQuantityMin} className="h-full bg-gray-200 px-2 text-black">
+                -
+              </button>
+              <input value={quantity} className="inline-block h-full w-full text-center focus:outline-none" placeholder="1" />
+              <button onClick={handleQuantityPlus} className="h-full bg-gray-200 px-2 text-black">
+                +
+              </button>
             </div>
             <button className="mt-5 block w-full rounded-sm border bg-blue-500 p-4 text-sm font-medium text-white" type="button">
               Add to Cart
