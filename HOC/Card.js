@@ -49,13 +49,30 @@ const Card = ({ data }) => {
   const handleQuantityPlus = () => setQuantity(quantity + 1);
   const handleQuantityMin = () => quantity > 0 && setQuantity(quantity - 1);
 
-  const handleCheckout = () => {
+  const handleCheckout = (e) => {
     if (!user) {
       router.push("/user/checkout");
     } else {
-      setDisplay(true);
+      // console.log(e.target.value)
+      let idProduct = e.target.value
+      let postCheckout = async () => {
+        try {
+          setDisplay(true);
+          let result = await axios.post(`https://service-example.sanbercloud.com/api/checkout/${id.user}/${idProduct}`, {quantity},
+          {
+            headers : { "Authorization" : "Bearer" + Cookies.get("token_user")}
+          })
+          setDisplay(false);
+          console.log(result)
+        } catch (error) {
+          console.log(error)
+        }
+      } 
+      postCheckout()
     }
   };
+
+  const handleChange = () => {}
 
   return (
     <div className="relative border border-gray-100 " style={{ width: "300px" }}>
@@ -78,7 +95,7 @@ const Card = ({ data }) => {
               <button onClick={handleQuantityMin} className="h-full bg-gray-200 px-2 text-black">
                 -
               </button>
-              <input value={quantity} className="inline-block h-full w-full text-center focus:outline-none" placeholder="1" />
+              <input onChange={handleChange} value={quantity} className="inline-block h-full w-full text-center focus:outline-none" placeholder="1" />
               <button onClick={handleQuantityPlus} className="h-full bg-gray-200 px-2 text-black">
                 +
               </button>
@@ -87,7 +104,7 @@ const Card = ({ data }) => {
         )}
 
         {!display && (
-          <button onClick={handleCheckout} className="mt-5 block w-full rounded-sm border bg-blue-500 p-4 text-sm font-medium text-white" type="button">
+          <button value={data.id} onClick={handleCheckout} className="mt-5 block w-full rounded-sm border bg-blue-500 p-4 text-sm font-medium text-white" type="button">
             Add to Cart
           </button>
         )}

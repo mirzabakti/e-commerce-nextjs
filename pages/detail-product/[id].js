@@ -60,6 +60,9 @@ const DetailData = () => {
     }
   };
 
+  const handleChange = () => {}
+
+
   return (
     <Layout>
       <div className="container mx-auto my-16">
@@ -103,7 +106,7 @@ const DetailData = () => {
                         <button onClick={handleQuantityMin} className="h-full bg-gray-200 px-2 text-black">
                           -
                         </button>
-                        <input value={quantity} className="inline-block h-full w-full text-center focus:outline-none" placeholder="1" />
+                        <input onChange={handleChange} value={quantity} className="inline-block h-full w-full text-center focus:outline-none" placeholder="1" />
                         <button onClick={handleQuantityPlus} className="h-full bg-gray-200 px-2 text-black">
                           +
                         </button>
