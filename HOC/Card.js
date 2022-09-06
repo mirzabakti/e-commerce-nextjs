@@ -10,7 +10,7 @@ const Card = ({ data }) => {
 
   let router = useRouter();
   let { state } = useContext(GlobalContext);
-  let { user, setUser } = state;
+  let { user, setUser, fetchStatus, setFetchStatus } = state;
 
   const [quantity, setQuantity] = useState(1);
   const [display, setDisplay] = useState(false);
@@ -63,6 +63,7 @@ const Card = ({ data }) => {
             headers : { "Authorization" : "Bearer" + Cookies.get("token_user")}
           })
           setDisplay(false);
+          setFetchStatus(true)
           console.log(result)
         } catch (error) {
           console.log(error)

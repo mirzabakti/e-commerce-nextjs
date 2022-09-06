@@ -1,7 +1,8 @@
 // import styles from "../styles/Home.module.css";
 import Card from "../HOC/Card";
 import Layout from "../widget/Layout";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { GlobalContext } from "../context/GlobalContext";
 
 export async function getServerSideProps() {
   let res = await fetch("http://service-example.sanbercloud.com/api/product");
@@ -17,6 +18,9 @@ export async function getServerSideProps() {
 export default function Home({ Product }) {
   // console.log(Product);
 
+  let { state } = useContext(GlobalContext);
+  let { user, setUser, fetchStatus, setFetchStatus } = state;
+
   const [dataProduct, setDataProduct] = useState(Product);
   const [limit, setLimit] = useState(5);
 
@@ -25,6 +29,14 @@ export default function Home({ Product }) {
   const [randomIndex, setRandomIndex] = useState(null);
 
   useEffect(() => {
+    let fetchData = async () => {
+      try {
+        let result = await axios.get(`https://service-example.sanbercloud.com/api/product`);
+        console.log(result.data)
+        setDataProduct(result.data);
+      } catch (error) {}
+    };
+
     if (Product !== null) {
       let filter = Product.filter((res) => {
         return res.available === 1;
@@ -33,7 +45,12 @@ export default function Home({ Product }) {
       let random = Math.floor(Math.random() * filter.length);
       setRandomIndex(random);
     }
-  }, []);
+
+    if (fetchStatus) {
+      fetchData();
+      fetchStatus(false)
+    }
+  }, [fetchStatus, setFetchStatus]);
 
   const handleCounterFilter = () => {
     setDisplaySpinner(true);
@@ -50,7 +67,7 @@ export default function Home({ Product }) {
         <div className="my-20">
           <h1 className="text-2xl font-bold">Produk Rekomendasi</h1>
         </div>
-        <div className="flex flex-wrap items-start justify-center gap-10 lg:justify-start mb-10">
+        <div className="mb-10 flex flex-wrap items-start justify-center gap-10 lg:justify-start">
           {dataProduct.length !== 0 &&
             dataProduct
               .filter((res, i) => {
