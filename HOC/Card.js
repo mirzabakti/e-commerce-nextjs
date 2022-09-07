@@ -10,7 +10,7 @@ const Card = ({ data }) => {
 
   let router = useRouter();
   let { state } = useContext(GlobalContext);
-  let { user, setUser, fetchStatus, setFetchStatus } = state;
+  let { user, setUser, fetchStatus, setFetchStatus ,fetchCheckoutStatus, setFetchCheckoutStatus, getCheckoutUser, setCheckoutUser } = state;
 
   const [quantity, setQuantity] = useState(1);
   const [display, setDisplay] = useState(false);
@@ -54,26 +54,30 @@ const Card = ({ data }) => {
       router.push("/user/checkout");
     } else {
       // console.log(e.target.value)
-      let idProduct = e.target.value
+      let idProduct = e.target.value;
       let postCheckout = async () => {
         try {
           setDisplay(true);
-          let result = await axios.post(`https://service-example.sanbercloud.com/api/checkout/${id.user}/${idProduct}`, {quantity},
-          {
-            headers : { "Authorization" : "Bearer" + Cookies.get("token_user")}
-          })
+          let result = await axios.post(
+            `https://service-example.sanbercloud.com/api/checkout/${id.user}/${idProduct}`,
+            { quantity },
+            {
+              headers: { Authorization: "Bearer" + Cookies.get("token_user") },
+            }
+          );
           setDisplay(false);
-          setFetchStatus(true)
-          console.log(result)
+          setFetchStatus(true);
+          setFetchCheckoutStatus(true);
+          console.log(result);
         } catch (error) {
-          console.log(error)
+          console.log(error);
         }
-      } 
-      postCheckout()
+      };
+      postCheckout();
     }
   };
 
-  const handleChange = () => {}
+  const handleChange = () => {};
 
   return (
     <div className="relative border border-gray-100 " style={{ width: "300px" }}>
