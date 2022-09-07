@@ -10,7 +10,7 @@ const Card = ({ data }) => {
 
   let router = useRouter();
   let { state } = useContext(GlobalContext);
-  let { user, setUser, fetchStatus, setFetchStatus ,fetchCheckoutStatus, setFetchCheckoutStatus, getCheckoutUser, setCheckoutUser } = state;
+  let { user, setUser, fetchStatus, setFetchStatus, fetchCheckoutStatus, setFetchCheckoutStatus, getCheckoutUser, setCheckoutUser } = state;
 
   const [quantity, setQuantity] = useState(1);
   const [display, setDisplay] = useState(false);
